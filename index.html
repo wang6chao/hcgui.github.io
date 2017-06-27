@@ -6,16 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>王朝贵的个人博客</title>
+  <title>All Is Nothing</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="王朝贵的个人博客">
+  <meta name="description" content="哈哈哈">
+<meta property="og:type" content="website">
+<meta property="og:title" content="All Is Nothing">
 <meta property="og:url" content="http://yoursite.com/index.html">
-<meta property="og:site_name" content="王朝贵的个人博客">
+<meta property="og:site_name" content="All Is Nothing">
+<meta property="og:description" content="哈哈哈">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="王朝贵的个人博客">
+<meta name="twitter:title" content="All Is Nothing">
+<meta name="twitter:description" content="哈哈哈">
   
-    <link rel="alternative" href="/atom.xml" title="王朝贵的个人博客" type="application/atom+xml">
+    <link rel="alternative" href="/atom.xml" title="All Is Nothing" type="application/atom+xml">
   
   
     <link rel="icon" href="/favicon.png">
@@ -45,7 +48,7 @@
 			<img src="null" class="js-avatar">
 		</a>
 		<hgroup>
-		  <h1 class="header-author"><a href="/">Wang Chaogui</a></h1>
+		  <h1 class="header-author"><a href="/">wangchaogui</a></h1>
 		</hgroup>
 		
 
@@ -103,7 +106,7 @@
 				<img src="null" class="js-avatar">
 			</div>
 			<hgroup>
-			  <h1 class="header-author js-header-author">Wang Chaogui</h1>
+			  <h1 class="header-author js-header-author">wangchaogui</h1>
 			</hgroup>
 			
 			
@@ -150,6 +153,299 @@
           </div>
           <div id="js-content" class="content-ll">
             
+  
+    <article id="post-hibernate学习1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/06/27/hibernate学习1/">hibernate学习1</a>
+    </h1>
+  
+
+        
+        <a href="/2017/06/27/hibernate学习1/" class="archive-article-date">
+  	<time datetime="2017-06-26T17:42:22.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-06-27</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Hibernate框架的搭建"><a href="#Hibernate框架的搭建" class="headerlink" title="Hibernate框架的搭建"></a>Hibernate框架的搭建</h1><h2 id="Hibernate框架是什么"><a href="#Hibernate框架是什么" class="headerlink" title="Hibernate框架是什么"></a>Hibernate框架是什么</h2><p>&emsp;引用自百度：<br>Hibernate是一个开放源代码的对象关系映射框架，它对JDBC进行了非常轻量级的对象封装，它将POJO与数据库表建立映射关系，是一个全自动的orm框架，hibernate可以自动生成SQL语句，自动执行，使得Java程序员可以随心所欲的使用对象编程思维来操纵数据库。 Hibernate可以应用在任何使用JDBC的场合，既可以在Java的客户端程序使用，也可以在Servlet/JSP的Web应用中使用，最具革命意义的是，Hibernate可以在应用EJB的J2EE架构中取代CMP，完成数据持久化的重任。</p>
+<h2 id="搭建步骤"><a href="#搭建步骤" class="headerlink" title="搭建步骤"></a>搭建步骤</h2><p>&emsp;1、新建一个动态web项目。<br><img src="https://ooo.0o0.ooo/2017/06/27/59514f8ff2e9f.png" alt=""></p>
+<p>&emsp;2、搭建Hibernate环境，将hibernate的jar包和MySQl驱动jar包一起放到lib文件夹。并将这些jar包 Add to Build Path。</p>
+<p><img src="https://ooo.0o0.ooo/2017/06/27/595152ef62b3c.png" alt=""></p>
+<p>&emsp;同时可以添加log4j日志jar包</p>
+<p>&emsp;3、创建持久化java类(Book类)。</p>
+<pre><code>package Hibernate.Test;
+
+public class Book {
+    private Integer id;
+    private String bookname;
+    private Double price;
+    private Integer stock;
+
+    public Integer getId() {
+        return id;
+    }
+    public void setId(Integer id) {
+        this.id = id;
+    }
+    public String getBookname() {
+        return bookname;
+    }
+    public void setBookname(String bookname) {
+        this.bookname = bookname;
+    }
+    public Double getPrice() {
+        return price;
+    }
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+    public Integer getStock() {
+        return stock;
+    }
+    public void setStock(Integer stock) {
+        this.stock = stock;
+    }
+}
+</code></pre><p>&emsp;&emsp;貌似在这里面有一些需要注意的。</p>
+<p>&emsp;4、创建数据库以及数据表。<br>    <img src="https://ooo.0o0.ooo/2017/06/27/59516204dc2f9.png" alt=""></p>
+<p>&emsp;5、创建对象-关系映射文件并配置。</p>
+<p>&emsp;直接在对应的持久java类（Book.java）目录下使用new新建一个xml文件，命名格式为：xx(此处为Book).hbm.xml。</p>
+<p>&emsp;添加对应文档类型标记。也可以从别的xml文档中拷贝，也可以使用插件直接生成一个java类的hbm.xml文件。</p>
+<p>&emsp;然后在<hibernate-mapping>中进行配置：</hibernate-mapping></p>
+<pre><code>&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;!DOCTYPE hibernate-mapping PUBLIC &quot;-//Hibernate/Hibernate Mapping DTD 3.0//EN&quot;
+&quot;http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd&quot;&gt;
+
+&lt;hibernate-mapping&gt;
+&lt;class name=&quot;Hibernate.Test.Book&quot; table=&quot;book&quot;&gt;    &lt;!-- java类与数据表相对应 --&gt;
+
+    &lt;id name=&quot;id&quot; type=&quot;int&quot;&gt;
+        &lt;column name=&quot;ID&quot; /&gt;
+        &lt;generator class=&quot;assigned&quot; /&gt;
+           &lt;!--
+               主键生成策略class可取最常用的两个值：assigned和native
+            在用Hibernate的时候，当有表中的主键是库自动生成的时候将使用native。
+            &lt;generator class=&quot;native&quot;&gt;&lt;/generator&gt;
+            而当是自己添加的时候则需要改为assigned。
+            &lt;generator class=&quot;assigned&quot;&gt;&lt;/generator&gt;
+            否则将会出现异常！
+         --&gt;    
+    &lt;/id&gt;
+
+    &lt;!--        
+         配置普通属性property
+        它的各属性中比较常用的有：
+        name（对应的Java类的属性名称）、
+        column（对应的表中的字段）、
+        type（属性的类型，eg.java.lang.String）、
+        not-null（设置该属性是否为空，为true时表示非空，默认为false）、
+        length(字段的长度限制)。 
+    --&gt;
+
+    &lt;property name=&quot;bookname&quot; type=&quot;java.lang.String&quot;&gt;
+        &lt;column name=&quot;BOOKNAME&quot; /&gt;
+    &lt;/property&gt;
+    &lt;property name=&quot;price&quot; type=&quot;java.lang.Double&quot;&gt;
+        &lt;column name=&quot;PRICE&quot; /&gt;
+    &lt;/property&gt;
+    &lt;property name=&quot;stock&quot; type=&quot;int&quot;&gt;
+        &lt;column name=&quot;STOCK&quot; /&gt;
+    &lt;/property&gt;
+&lt;/class&gt;
+&lt;/hibernate-mapping&gt;
+</code></pre><p>&emsp;6、创建hibernate核心配置文件</p>
+<p>&emsp;在src目录下new创建xml文件，命名为hibernate.cfg.xml。</p>
+<p>&emsp;配置如下:</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;!DOCTYPE hibernate-configuration PUBLIC
+    &quot;-//Hibernate/Hibernate Configuration DTD 3.0//EN&quot;
+    &quot;http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd&quot;&gt;
+&lt;hibernate-configuration&gt;
+   &lt;session-factory&gt;
+    &lt;property name=&quot;hibernate.connection.driver_class&quot;&gt;com.mysql.jdbc.Driver&lt;/property&gt;
+    &lt;property name=&quot;hibernate.connection.url&quot;&gt;jdbc:mysql:///booktest&lt;/property&gt;
+    &lt;property name=&quot;hibernate.connection.username&quot;&gt;root&lt;/property&gt;
+     &lt;property name=&quot;hibernate.connection.password&quot;&gt;q1539496189&lt;/property&gt;
+
+     &lt;!-- 数据库方言 --&gt;
+     &lt;property name=&quot;dialect&quot;&gt;org.hibernate.dialect.MySQLDialect&lt;/property&gt;  
+
+       &lt;!-- 执行操作时是否在控制台打印 SQL --&gt;
+    &lt;property name=&quot;show_sql&quot;&gt;true&lt;/property&gt;
+
+    &lt;!-- 是否对 SQL 进行格式化 --&gt;
+    &lt;property name=&quot;format_sql&quot;&gt;true&lt;/property&gt;
+
+       &lt;!-- 指定关联的 .hbm.xml 文件 --&gt;
+    &lt;mapping resource=&quot;Hibernate/Test/Book.hbm.xml&quot;/&gt;
+&lt;/session-factory&gt;
+&lt;/hibernate-configuration&gt;
+</code></pre><p>&emsp;7、进行测试</p>
+<p>&emsp;编写Test.java测试文件</p>
+<pre><code>package Hibernate.Test;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.service.ServiceRegistry;
+
+
+
+public class Test {
+
+public static void main(String[] args) {
+    // TODO Auto-generated method stub
+
+    //创建Configuration对象:对应hibernate的基本配置信息和对象关系映射信息
+    Configuration cfg = new Configuration().configure();
+
+    /*Configuration config= new Configuration();
+    config.configure();
+    SessionFactory factory = config.buildSessionFactory();*/
+    //从hibernate 4之后，Configuration类中，原先常用的
+    //获取SessionFactory的方法buildSessionFactory()被标记为过时
+    //官方建议使用buildSessionFactory(ServiceRegistry sr)这个方法来获取SessionFactory。
+
+    //创建一个 ServiceRegistry 对象: hibernate 4.x 新添加的对象
+    ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()//
+            .applySettings(cfg.getProperties())//
+            .build();
+    SessionFactory factory = cfg.buildSessionFactory(serviceRegistry);
+
+    //创建一个 Session 对象
+    Session session = factory.openSession();
+
+    //开启事务
+    Transaction tr = session.beginTransaction();
+
+    //持久化操作
+    Book book1= new Book();
+    book1.setId(2);
+    book1.setBookname(&quot;java&quot;);
+    book1.setPrice(23.5);
+    book1.setStock(45);
+
+    //保存
+    session.save(book1);
+
+    //提交事务
+    tr.commit();
+
+    //关闭session
+    session.close();
+
+    //关闭factory对象
+    factory.close();
+}
+}
+</code></pre><p>&emsp;执行结果:<br><img src="https://ooo.0o0.ooo/2017/06/27/5951e5ac17c2a.png" alt=""><br>&emsp;数据库：<br><img src="https://ooo.0o0.ooo/2017/06/27/5951e61f2ec7f.png" alt=""></p>
+<h2 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h2><p>&emsp;1、出错，entity class not found</p>
+<p><img src="https://ooo.0o0.ooo/2017/06/27/5951e2a8345c2.png" alt="">    </p>
+<p>&emsp;异常由于没有找到对应的java类引起的，此时就要查看映射文件配置。<br><img src="https://ooo.0o0.ooo/2017/06/27/5951e4c364384.png" alt=""><br>在跟另外的xml配置文件对比后，发现需要将对应文件后缀.java删除，删除之后测试果然没有报错。<br><img src="https://ooo.0o0.ooo/2017/06/27/5951e5ac17c2a.png" alt=""></p>
+<p>&emsp;2、Hibernate可以自动创建数据表，但是不能自动创建数据库。</p>
+<p>&emsp;如果需要自动创建表，需要在hibernate.cfg.xml中加入如下代码（跟添加其他属性一样）：</p>
+<pre><code>&lt;property name=&quot;hbm2ddl.auto&quot;&gt;update&lt;/property&gt;  
+</code></pre><p>&emsp;update：表示自动根据model对象来更新表结构，启动hibernate时会自动检查数据库，如果缺少表，则自动建表；如果表里缺少列，则自动添加列。</p>
+<p>&emsp;还有其他的参数：<br>&emsp;create：启动hibernate时，自动删除原来的表，新建所有的表，所以每次启动后的以前数据都会丢失。</p>
+<p>&emsp;create-drop：启动hibernate时，自动创建表，程序关闭时，自动把相应的表都删除。所以程序结束时，表和数据也不会再存在。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>&emsp;在hibernate中的configuration类是需要掌握的，可以餐开下面的博客。</p>
+<p>&emsp;<a url="http://blog.csdn.net/qq_30638831/article/details/50533280">Hibernate核心类用法-使用Configuration装载配置</a></p>
+<p>&emsp;再推荐一篇博客，后面的关于接口的作用的介绍，感觉很有用。</p>
+<p>&emsp;<a url="http://blog.csdn.net/xiangwanpeng/article/details/53439446">在Eclipse下搭建Hibernate框架</a></p>
+<p>&emsp;第一篇博客，感觉很不容易，期间虽然参考了一些大神的博客，但是自己也收获了许多，同时在之后的学习中，忘了的知识点时常也可以很方便的回来看看。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">javaee</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/06/27/hibernate学习1/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+  
+    <article id="post-hibernate学习3" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/06/27/hibernate学习3/">hibernate学习3</a>
+    </h1>
+  
+
+        
+        <a href="/2017/06/27/hibernate学习3/" class="archive-article-date">
+  	<time datetime="2017-06-26T17:41:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-06-27</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/06/27/hibernate学习3/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
   
     <article id="post-My-First-Blood" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
@@ -225,7 +521,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2017 Wang Chaogui
+    		&copy; 2017 wangchaogui
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -307,11 +603,11 @@ return o(t,i(n),arguments.length<3?void 0:u(arguments[2]))}})},function(t,n,r){v
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">日志</a>
+                <a href="javascript:void(0)" class="js-tag color2">javaee</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">personal log</a>
+                <a href="javascript:void(0)" class="js-tag color3">日志</a>
               </li>
             
             <div class="clearfix"></div>
